@@ -1,2 +1,20 @@
-# server-
-「Server酱」，英文名「ServerChan」，是一款「程序员」和「服务器」之间的通信软件。  说人话？就是从服务器推报警和日志到手机的工具
+function sc_send(  $text , $desp = '' , $key = '[SCKEY(登入后可见)]'  )
+{
+	$postdata = http_build_query(
+    array(
+        'text' => $text,
+        'desp' => $desp
+    )
+);
+
+$opts = array('http' =>
+    array(
+        'method'  => 'POST',
+        'header'  => 'Content-type: application/x-www-form-urlencoded',
+        'content' => $postdata
+    )
+);
+$context  = stream_context_create($opts);
+return $result = file_get_contents('https://sc.ftqq.com/'.$key.'.send', false, $context);
+
+}
